@@ -1,0 +1,4 @@
+bin
+*.old
+*.swp
+*.save
