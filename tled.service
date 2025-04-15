@@ -1,0 +1,16 @@
+######################################
+# tled.service                       #
+# copyright (c) 2025, Nathan Gill    #
+# https://github.com/OldUser101/tled #
+######################################
+
+[Unit]
+Description=Start tled on boot
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/tled
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

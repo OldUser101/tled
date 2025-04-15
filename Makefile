@@ -13,6 +13,8 @@ SRC_DIR := src
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES := $(patsubst $(SRC_DIR)/*.c, $(BIN_DIR)/*.o, $(SRC_FILES))
 BIN_LEDS := $(BIN_DIR)/tled
+TARGET_DIR := /usr/bin
+SERVICE_DIR := /etc/systemd/system
 
 all: $(BIN_LEDS)
 
@@ -27,6 +29,19 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.c | $(BIN_DIR)
 
 clean:
 	rm -rf $(BIN_DIR)
+
+install: $(BIN_LEDS)
+	cp $(BIN_LEDS) $(TARGET_DIR)/
+	cp tled.service $(SERVICE_DIR)/
+	systemctl daemon-reexec
+
+enable:
+	systemctl enable tled
+	systemctl start tled
+
+disable:
+	systemctl stop tled
+	systemctl disable tled
 
 .PHONY:
 	clean
